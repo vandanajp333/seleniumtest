@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.selenium.AutomationTesting.MavenTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.478 s - in com.selenium.AutomationTesting.MavenTest
