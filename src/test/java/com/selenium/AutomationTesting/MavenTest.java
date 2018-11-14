@@ -3,6 +3,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -25,7 +27,7 @@ public class MavenTest {
 		System.setProperty("webdriver.chrome.driver", "C://Users//z003srvt.AD001//Downloads//chromedriver_win32//chromedriver.exe");
 		driver = new ChromeDriver();
 		}
-		else if(property.get("browser").equals("firefox")){
+		else if(property.getProperty("browser").equals("firefox")){
 			System.setProperty("webdriver.gecko.driver","C://Users//z003srvt.AD001//Downloads//geckodriver-v0.23.0-win64//geckodriver.exe");
 			driver = new FirefoxDriver();
 		}
@@ -35,18 +37,14 @@ public class MavenTest {
 //		}
 		PageObjects po = new PageObjects(driver);
 		driver.get(property.getProperty("siteURL"));
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		po.signIn().click();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		po.emailId().sendKeys(property.getProperty("emailId"));
 		po.password().sendKeys(property.getProperty("password"));
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		po.loginButton().click();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		po.searchBox().sendKeys(property.getProperty("searchText"));
 		po.searchButton().click();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		po.signOut().click();
 	}
 
@@ -60,16 +58,19 @@ public class MavenTest {
 		driver = new ChromeDriver();
 		PageObjects po = new PageObjects(driver);
 		driver.get(property.getProperty("siteURL"));
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		po.signIn().click();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		po.emailId().sendKeys(property.getProperty("emailId"));
 		po.password().sendKeys(property.getProperty("invalidPassword"));
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		po.loginButton().click();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		Assert.assertFalse(po.signOut().isDisplayed());
+//		try{
+//			Assert.assertFalse(po.signOut().isDisplayed());
+//		}
+//		catch(NoSuchElementException e){
+//			System.out.println("NoSuchElementException caught");
+//		}
 		}
 	
 	@AfterMethod
